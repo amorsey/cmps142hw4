@@ -1,0 +1,151 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage, amsmath, hyperref, epsfig,supertabular}
+\usepackage[titletoc]{appendix}
+\usepackage{tikz}
+\usepackage{qtree}
+
+\begin{document}
+\begin{center}
+{\bf\Large CMPS 142 --- Spring 2017 --  Homework 4}
+\end{center}
+Alexander Morsey(ammorsey), Jared Jensen(), Sinclert Perez()
+
+\section*{1.}
+\section*{2.}
+Cross validation using several different kernels.
+\subsection*{RBF}
+\begin{flushleft}
+\begin{supertabular}{|l|l|l|l|}
+	\hline
+	Test & $\gamma$ & C & Result(\%)\\
+	\hline
+	1. & 0.01 & 0.1 & 60.596\\
+	\hline
+	2. & 0.1 & 0.1 & 73.136\\
+	\hline
+	3. & 1 & 0.1 & 87.503\\
+	\hline
+	4. & 10 & 0.1 & 89.372\\
+	\hline
+	5. & 0.01 & 1 & 73.462\\
+	\hline
+	6. & 0.1 & 1 & 87.22\\
+	\hline
+	7. & 1 & 1 & 92.371\\
+	\hline
+	8. & 10 & 1 & 93.067\\
+	\hline
+	9. & 0.01 & 10 & 87.112\\
+	\hline
+	10. & 0.1 & 10 & 92.154\\
+	\hline
+	11. & 1 & 10 & 93.675\\
+	\hline
+	12. & 10 & 10 & 93.219\\
+	\hline
+	13. & 0.01 & 100 & 91.437\\
+	\hline
+	14. & 0.1 & 100 & 93.349\\
+	\hline
+	15. & 1 & 100 & 93.893\\
+	\hline
+	16. & 10 & 100 & 92.567\\
+	\hline
+
+\end{supertabular}
+\end{flushleft}
+
+\subsection*{Polynomial}
+\begin{flushleft}
+\begin{supertabular}{|l|l|l|l|l|}
+	\hline
+	Test & $\gamma$ & C & coef & Result(\%)\\
+	\hline
+	1. & 1 & 100 & 0 & 54.206\\
+	\hline
+	2. & 1 & 100 & 1 & 64.269\\
+	\hline
+	3. & 1 & 100 & 3 & 55.661\\
+	\hline
+	4. & 1 & 100 & -1 & 72.679\\
+	\hline
+	5. & 2 & 100 & -1 & 67.494\\
+	\hline
+\end{supertabular}
+\end{flushleft}
+Running the tests with the polynomial kernel was incredibly slow, so we could not fully test the parameters.
+
+\subsection*{Linear}
+\begin{flushleft}
+\begin{supertabular}{|l|l|l|}
+	\hline
+	Test & Cost & Result(\%)\\
+	\hline
+	1. & 1 & 88.937\\
+	\hline
+	2. & 10 & 80.221\\
+	\hline
+	3. & 100 & 72.702\\
+	\hline
+\end{supertabular}
+\end{flushleft}
+Of what we tested RBF did the best. Hypothetically the polynomial kernel should do better, but we couldn't get it to do better.
+\section*{3.}
+	We need a dataset with 3 criteria:
+	\begin{enumerate}
+		\item There is a small decision tree that correctly classifies the data
+		\item The greedy decision tree construction algorithm constructs a larger tree
+		\item There are no ties in the construction process.
+	\end{enumerate}
+
+	Here is the training dataset that we came up with.
+
+	\begin{tabular}{c|c||c}
+		$X_1$&$X_2$&$Y$\\
+		1&1&1\\
+		0&1&0\\
+		1&1&1\\
+		1&0&1\\
+		0&0&0\\
+		1&0&1\\
+	\end{tabular}
+
+	Simple tree that correctly classifies the data:
+
+	\Tree[[.{$X_1$ = 1} [.{Predict 1} ]]
+          [.{$X_1$ = 0} [.{Predict 0} ]]]
+
+    Greedy construction:
+
+    Step 1: Initial feature with the highest error rate is $X_2$. Split based off of that.
+
+    \Tree[[.{$X_2$ = 1} ]
+   	      [.{$X_2$ = 0} ]]
+
+   	On the left side, the data is
+
+   	\begin{tabular}{c|c||c}
+		$X_1$&$X_2$&$Y$\\
+		1&1&1\\
+		0&1&0\\
+		1&1&1\\
+	\end{tabular}
+
+	And on the right side, the data is
+
+	\begin{tabular}{c|c||c}
+		$X_1$&$X_2$&$Y$\\
+		1&0&1\\
+		0&0&0\\
+		1&0&1\\
+	\end{tabular}
+
+	For both sides, X1 now has a higher error rate. Split off that.
+
+	\Tree[[.{$X_2$ = 1}
+	      	[.{$X_1 = 1$} [.{Predict 1} ]]
+	      	[.{$X_1 = 0$} [.{Predict 0} ]]]
+   	      [.{$X_2$ = 0}
+   	        [.{$X_1 = 1$} [.{Predict 1} ]]
+	      	[.{$X_1 = 0$} [.{Predict 0} ]]]]
+\end{document}
