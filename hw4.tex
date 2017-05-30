@@ -11,6 +11,37 @@
 Alexander Morsey(ammorsey), Jared Jensen(), Sinclert Perez()
 
 \section*{1.}
+After plotting the points into a 2 dimensional spaces (there are only 2 features)
+we can clearly see that the hyperplanes containing the support vectors of each class
+are defined the following equations:
+
+Class "+1": \begin{equation}
+            x_1 + x_2 - 2 = 0
+            \end{equation}
+
+Class "-1": \begin{equation}
+            x_1 + x_2 - 1 = 0
+            \end{equation}
+
+
+The separation plane is the one between those two. Its equation is:
+
+\begin{equation}
+x_1 + x_2 - 1.5 = 0
+\end{equation}
+
+
+The geometric margin is computed applying the following formula:
+
+\begin{equation}
+min_i \frac {y_i(w^Tx_i+b)}{||w||}
+\end{equation}
+
+In our case, plotting the different instances into the formular we got that the minimum is:
+
+\begin{equation}
+\frac {1 * (0.5)}{\sqrt{2}} = 3.53
+\end{equation}
 \section*{2.}
 Cross validation using several different kernels.
 \subsection*{RBF}
